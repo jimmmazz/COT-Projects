@@ -72,6 +72,10 @@ const handleSignup = async () => {
 </script>
 
 <style scoped>
+section {
+    background-color: lightcoral;
+}
+
 h1 {
     margin: 0 auto 1rem;
     font-size: 2rem;

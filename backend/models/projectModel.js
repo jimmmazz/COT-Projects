@@ -7,6 +7,28 @@ const projectSchema = new Schema({
     type: String,
     require: true,
   },
+  date: {
+    type: String,
+    require: true,
+  },
+  location: {
+    type: String,
+    require: true,
+  },
+  contactName: {
+    type: String,
+    require: true,
+  },
+  contactPhone: {
+    type: String,
+  },
+  projectDesc: {
+    type: String,
+    require: true,
+  },
+  projectWorkComplete: {
+    type: String,
+  },
 })
 
 projectSchema.statics.getProjects = async function () {
@@ -17,9 +39,10 @@ projectSchema.statics.getProjects = async function () {
   return projects
 }
 
-projectSchema.statics.addProject = async function (projectName) {
+projectSchema.statics.addProject = async function (projectData) {
   try {
-    const newProject = await this.create({ projectName })
+    // console.log(projectData)
+    const newProject = await this.create({ ...projectData })
     return newProject
   } catch (error) {
     console.log(error)

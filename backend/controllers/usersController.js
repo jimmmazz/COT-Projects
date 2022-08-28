@@ -13,7 +13,7 @@ export const createUser = async (req, res) => {
 export const loginUser = async (req, res) => {
   const { email, password } = req.body
   const response = await User.login(email, password)
-  console.log(req.body)
+  // console.log(req.body)
 
   if (!response.user) {
     res.status(400).json(response.message)

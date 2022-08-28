@@ -1,7 +1,7 @@
 <template>
     <nav class="nav">
         <div class="logged-in" v-if="isUser">
-            <p>Email: {{ user.email }}</p>
+            <p>Welcome: {{ user.name }}</p>
             <router-link to="/add-project">Add Project</router-link>
             <button @click="handelLogout">Logout</button>
         </div>
@@ -21,10 +21,11 @@ const emit = defineEmits(['userData'])
 
 const props = defineProps(['user'])
 const isUser = ref(false)
-
+const token = ref(localStorage.getItem('token'))
 if (props.user !== null) {
     isUser.value = true
 }
+
 
 
 const handelLogout = () => {
@@ -35,7 +36,11 @@ const handelLogout = () => {
 }
 
 watchEffect(() => {
-    console.log(props.user)
+    // if (props.user) {
+    //     isUser.value = 'dog'
+    //     console.log(isUser)
+    // }
+    // console.log(props.user)
 
     if (props.user !== null) {
         if (props.user.hasOwnProperty('email')) {
@@ -50,9 +55,11 @@ watchEffect(() => {
 
 <style scoped>
 .nav {
+    margin-bottom: 2rem;
     grid-column: 1/3;
     grid-row: 1/2;
     box-shadow: 0px 2px 20px 1px rgb(0 0 0 / .1);
+    background-color: salmon;
 }
 
 a {

@@ -51,7 +51,7 @@ const handleLogin = async () => {
         token.value = json.token
         localStorage.setItem('token', token.value)
         emit('userData', user.value)
-        router.push({ name: 'AddProject' })
+        router.push({ name: 'AddProject', params: { user: user.value } })
     } else {
         error.value = json
     }
@@ -66,6 +66,10 @@ h1 {
     margin: 0 auto 1rem;
     font-size: 2rem;
     text-align: center;
+}
+
+section {
+    background-color: lightcyan;
 }
 
 .container {

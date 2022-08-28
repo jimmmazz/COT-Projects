@@ -26,12 +26,13 @@ const updateProjects = (projectData) => {
 </template>
 
 <style scoped>
-main {
-  display: grid;
-  grid-template-columns: 2fr 1fr;
+.container {
+  max-width: 1200px;
+  margin: auto;
 }
 
-navMain {
-  grid: 1/3;
+main {
+  display: grid;
+  grid-template-columns: 3fr 1fr;
 }
 </style>

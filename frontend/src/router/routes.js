@@ -1,4 +1,4 @@
-// import Home from '../views/home-view.vue'
+import Home from '../views/home-view.vue'
 import SignUp from '../views/sign-up.vue'
 import Login from '../views/log-in.vue'
 import Projects from '../views/my-projects.vue'
@@ -8,7 +8,7 @@ const routes = [
   {
     path: '/',
     name: 'Home',
-    component: Login,
+    component: Home,
   },
   {
     path: '/signup',
@@ -29,6 +29,11 @@ const routes = [
     path: '/add-project',
     name: 'AddProject',
     component: addProject,
+    beforeEnter: (to, from) => {
+      if (!to.params.user) {
+        return false
+      }
+    },
   },
 ]
 

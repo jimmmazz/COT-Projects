@@ -1,23 +1,15 @@
-// import jwt from 'jsonwebtoken'
-// import { isAuth } from '../middleware/auth.js'
 import Projects from '../models/projectModel.js'
 
 export const getProjects = async (req, res) => {
   const projects = await Projects.getProjects()
-  console.log(projects)
+  // console.log('retured projects from backend', projects)
   res.status(200).json(projects)
-  // const token = req.header('Bearer')
-  // console.log('controller', token)
-  // const isTokenAuth = await isAuth(token)
-  //   const decoded = jwt.verify(token, process.env.JWT_SECRET)
-  // console.log('token', token)
-  // res.send(isTokenAuth)
 }
 
 export const addProject = async (req, res) => {
-  const { projectName } = req.body
-  // console.log('project name:', projectName)
-  const newProject = await Projects.addProject(projectName)
-  // console.log(req.body)
+  // const { projectName } = req.body
+  // console.log('project name:', req.body)
+  const newProject = await Projects.addProject(req.body)
+  // console.log('new project', newProject)
   res.status(200).json(newProject)
 }

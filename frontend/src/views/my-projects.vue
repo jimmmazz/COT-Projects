@@ -1,6 +1,6 @@
 <template>
-    <div>
-        <h1>Projects</h1>
+    <div class="projects-list">
+        <h2>Projects</h2>
         <ul v-for="project in projects">
             <li>{{ project.projectName }}</li>
         </ul>
@@ -9,8 +9,8 @@
 </template>
 
 <script setup>
-import { onBeforeMount, ref, watchEffect } from 'vue';
-import { useRouter } from 'vue-router';
+import { onBeforeMount, ref, watchEffect } from 'vue'
+import { useRouter } from 'vue-router'
 
 const projects = ref([])
 const token = localStorage.getItem('token')
@@ -33,11 +33,10 @@ watchEffect(async () => {
 
 //onBeforeMounted fetch projects 
 onBeforeMount(async () => {
-    // console.log(props.user)
+    console.log(props.user)
     if (!props.user) {
         router.push({ name: 'Login' })
         console.log('Re-loggin required after page refresh')
-        // return
     }
 
     // const queryEmail = 
@@ -53,13 +52,20 @@ onBeforeMount(async () => {
 </script>
 
 <style scoped>
-div {
-    margin-left: 2rem;
-    padding: 1rem;
+h2 {
+    margin-bottom: 1rem;
 }
 
 ul {
     list-style: none;
     margin-bottom: .5rem;
+}
+
+.projects-list {
+    /* display: flex;
+    flex-direction: column;
+    align-items: center; */
+    background-color: lightblue;
+    padding: 1rem;
 }
 </style>
