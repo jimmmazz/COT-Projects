@@ -6,11 +6,11 @@
             <form>
                 <div class="form-control">
                     <label for="email">Email</label>
-                    <input type="email" id="email" v-model="email" />
+                    <input type="email" id="email" v-model.trim="email" required />
                 </div>
                 <div class="form-control">
                     <label for="password">Password</label>
-                    <input type="password" id="password" v-model="password" />
+                    <input type="password" id="password" v-model.trim="password" required />
                 </div>
                 <button @click.prevent="handleLogin">Login</button>
             </form>

@@ -5,35 +5,35 @@
             <header class="project-header">
                 <div class="form-control">
                     <label for="project-title">Title</label>
-                    <input id="project-title" v-model="title" />
+                    <input id="project-title" v-model.trim="title" required />
                 </div>
                 <div class="form-control">
                     <label for="project-date">Date</label>
-                    <input id="project-date" v-model="date" type="date" />
+                    <input id="project-date" v-model.trim="date" type="date" required />
                 </div>
                 <div class="form-control">
                     <label for="location">Location</label>
-                    <input id="location" v-model="location" />
+                    <input id="location" v-model.trim="location" required />
                 </div>
             </header>
             <div class="contact-info">
                 <div class="form-control">
                     <label for="project-contact">Contact Name</label>
-                    <input id="project-contact" v-model="contactName" />
+                    <input id="project-contact" v-model.trim="contactName" required />
                 </div>
                 <div class="form-control">
                     <label for="project-contact-phone">Contact Phone</label>
-                    <input id="project-contact-phone" v-model="contactPhone" />
+                    <input id="project-contact-phone" v-model.trim="contactPhone" />
                 </div>
             </div>
             <div class="project-comments">
                 <div class="form-control">
                     <label for="project-description">Description</label>
-                    <textarea id="project-description" v-model="projectDesc"></textarea>
+                    <textarea id="project-description" v-model.trim="projectDesc" required></textarea>
                 </div>
                 <div class="form-control">
                     <label for="project-work-complete">Work Complete</label>
-                    <textarea id="project-work-complete" v-model="projectWorkComplete"></textarea>
+                    <textarea id="project-work-complete" v-model.trim="projectWorkComplete"></textarea>
                 </div>
             </div>
             <button>Add Project</button>
@@ -59,7 +59,6 @@ const props = defineProps(['user'])
 const emit = defineEmits(['new-project'])
 
 const handelSubmit = async () => {
-
 
     const data = {
         projectName: title.value,

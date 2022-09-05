@@ -4,11 +4,12 @@ import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
 
 const { Schema, model } = mongoose
+const prohibitedSelcialCharacters = ['<', '>', '=', '"']
 
 const userSchema = new Schema({
   name: {
     type: String,
-    // required: true,
+    required: true,
   },
   email: {
     type: String,
@@ -32,6 +33,16 @@ userSchema.statics.signup = async function (
     if (!email || !password || !name || !verifyPassword) {
       throw Error('All fields must be filled')
     }
+    const combinedPasswords = password.concat(verifyPassword)
+    const isNotAllowed = prohibitedSelcialCharacters.filter((char) =>
+      combinedPasswords.includes(char)
+    )
+    if (isNotAllowed.length > 0) {
+      throw Error('Password can not contain <, >, =, or "')
+    }
+    if (!validator.isLength(password, { min: 4, max: 12 })) {
+      throw Error('Password must between 4 and 12 characters.')
+    }
     if (password !== verifyPassword) {
       throw Error('Passwords do not match.')
     }
@@ -39,9 +50,7 @@ userSchema.statics.signup = async function (
     if (!validator.isEmail(email)) {
       throw Error('Email not valid')
     }
-    // if (!validator.isStrongPassword(password)) {
-    //   throw Error('Password not strong enough')
-    // }
+    email = validator.normalizeEmail(email)
 
     const exists = await this.findOne({ email })
 
@@ -55,10 +64,10 @@ userSchema.statics.signup = async function (
     const user = await this.create({ name, email, password: hash })
 
     user.password = null
-
+    console.log('model ', user)
     return user
   } catch (error) {
-    console.log(error.message)
+    // console.log('catch ', error.message)
     return error
   }
 }
@@ -69,15 +78,27 @@ userSchema.statics.login = async function (email, password) {
     if (!email || !password) {
       throw Error('All fields must be filled')
     }
+    const isNotAllowed = prohibitedSelcialCharacters.filter((char) =>
+      password.includes(char)
+    )
+    if (isNotAllowed.length > 0) {
+      throw Error('Password can not contain <, >, =, or "')
+    }
     if (!validator.isEmail(email)) {
       throw Error('Email not valid')
     }
+    email = validator.normalizeEmail(email)
 
     const user = await this.findOne({ email })
+    console.log(user)
 
     if (!user) {
       throw Error('Email or password not correct.')
     }
+    // if (validator.escape(password)) {
+    //   console.log(validator.escape(password))
+    //   return { user: null }
+    // }
 
     const isCompared = await bcrypt.compare(password, user.password)
 

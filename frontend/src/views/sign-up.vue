@@ -6,19 +6,19 @@
             <form>
                 <div class="form-control">
                     <label for="name">Name</label>
-                    <input type="text" id="name" v-model="name" />
+                    <input type="text" id="name" v-model.trim="name" required />
                 </div>
                 <div class="form-control">
                     <label for="email">Email</label>
-                    <input type="email" id="email" v-model="email" />
+                    <input type="email" id="email" v-model.trim="email" required />
                 </div>
                 <div class="form-control">
                     <label for="password">Password</label>
-                    <input type="password" id="password" v-model="password" />
+                    <input type="password" id="password" v-model.trim="password" required />
                 </div>
                 <div class="form-control">
                     <label for="verify-password">Verify password</label>
-                    <input type="password" id="verify-password" v-model="verifyPassword" />
+                    <input type="password" id="verify-password" v-model.trim="verifyPassword" required />
                 </div>
                 <button @click.prevent="handleSignup">Sign Up</button>
             </form>
