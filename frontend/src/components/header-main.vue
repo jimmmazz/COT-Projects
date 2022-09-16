@@ -1,8 +1,9 @@
 <template>
     <nav class="nav">
         <div class="logged-in" v-if="isUser">
+            <h2>Add</h2>
             <p>Welcome: {{ user.name }}</p>
-            <router-link to="/add-project">Add Project</router-link>
+            <!-- <router-link to="/add-project">Add Project</router-link> -->
             <button @click="handelLogout">Logout</button>
         </div>
         <div class="login" v-else>
@@ -59,7 +60,8 @@ watchEffect(() => {
     grid-column: 1/3;
     grid-row: 1/2;
     box-shadow: 0px 2px 20px 1px rgb(0 0 0 / .1);
-    background-color: salmon;
+    border-bottom: 1px solid rgb(132, 132, 132);
+    /* background-color: salmon; */
 }
 
 a {
@@ -72,6 +74,15 @@ a {
 p {
     display: inline-block;
     margin-right: 2rem;
+    margin-left: auto;
+    align-self: flex-end;
+    font-size: 1.5rem;
+}
+
+button {
+    padding: 5px 15px;
+    background-color: transparent;
+    border-radius: 5px;
 }
 
 nav {
@@ -79,9 +90,16 @@ nav {
     justify-content: center;
     align-items: end;
     padding: 1em;
+    margin-top: 1rem;
 }
 
-.logged-in,
+.logged-in {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
 .login {
     margin-left: auto;
 }

@@ -95,10 +95,6 @@ userSchema.statics.login = async function (email, password) {
     if (!user) {
       throw Error('Email or password not correct.')
     }
-    // if (validator.escape(password)) {
-    //   console.log(validator.escape(password))
-    //   return { user: null }
-    // }
 
     const isCompared = await bcrypt.compare(password, user.password)
 

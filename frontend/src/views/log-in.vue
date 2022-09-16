@@ -1,6 +1,6 @@
 <template>
     <section>
-        <h1>Login</h1>
+        <h2>Login</h2>
         <div class="container">
             <p v-if="error" class="error"> {{ error }}</p>
             <form>
@@ -62,14 +62,16 @@ const handleLogin = async () => {
 </script>
 
 <style scoped>
-h1 {
+h2 {
     margin: 0 auto 1rem;
-    font-size: 2rem;
+    /* font-size: 2rem; */
     text-align: center;
 }
 
 section {
-    background-color: lightcyan;
+    box-shadow: 0px 2px 20px 1px rgb(0 0 0 / .1);
+    border-bottom: 1px solid rgb(132, 132, 132);
+    padding: 1rem;
 }
 
 .container {
