@@ -7,6 +7,7 @@
             <button @click="handelLogout">Logout</button>
         </div>
         <div class="login" v-else>
+            <router-link to="/">Home</router-link>
             <router-link to="/signup">Sign Up</router-link>
             <router-link to="/login">Login</router-link>
         </div>
@@ -33,7 +34,7 @@ const handelLogout = () => {
     localStorage.removeItem('token')
     isUser.value = false
     emit('userData', null)
-    router.push({ name: 'Login' })
+    router.push({ name: 'Home' })
 }
 
 watchEffect(() => {

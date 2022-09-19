@@ -42,6 +42,17 @@ projectSchema.statics.getProjects = async function () {
   }
 }
 
+projectSchema.statics.getProject = async function (id) {
+  const project = await this.findById({ _id: id })
+  if (!project) {
+    console.log('No projects')
+    return
+  } else {
+    // console.log(project)
+    return project
+  }
+}
+
 projectSchema.statics.addProject = async function (projectData) {
   const {
     projectName,

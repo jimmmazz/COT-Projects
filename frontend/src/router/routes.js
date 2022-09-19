@@ -9,6 +9,7 @@ const routes = [
     path: '/',
     name: 'Home',
     component: Home,
+    props: true,
   },
   {
     path: '/signup',
@@ -24,6 +25,7 @@ const routes = [
     path: '/projects',
     name: 'Projects',
     component: Projects,
+    props: true,
   },
   {
     path: '/add-project',

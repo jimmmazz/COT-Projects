@@ -1,16 +1,22 @@
 <template>
     <!-- display fetched projects -->
     <div class="projects-list">
-        <h2>Projects</h2>
+        <div class="search">
+            <h3 class="search-heading">Search projects</h3>
+            <input class="search-input" type="text" v-model="projectDisplayInput">
+        </div>
+        <h3>Open Projects</h3>
+
         <div>
             <div v-if="projects[0] === 'No projects'">{{ projects[0] }}</div>
             <div v-else>
-                <ul v-for="project in projects">
+                <ul v-for="project in projectDisplayInput ? projectsList : projects ">
                     <div class="card">
                         <li>{{ `${project.projectName} @ ${project.location}` }}</li>
                         <div>
                             <div class="btn-container" v-show="!props.user && projects[0] !== 'No projects'">
-                                <button class="btn btn-details" @click="handelDetailsClick">Details</button>
+                                <button class="btn btn-details"
+                                    @click="handelDetailsClick(project._id)">Details</button>
                             </div>
                             <div class="btn-container" v-show="props.user && projects[0] !== 'No projects'">
                                 <button class="btn btn-edit" @click="handelEditClick">Edit</button>
@@ -22,22 +28,27 @@
                     </div>
                 </ul>
             </div>
-
-
         </div>
     </div>
 </template>
 
 <script setup>
 import { onBeforeMount, ref, watchEffect } from 'vue'
-import { useRouter } from 'vue-router'
 
 const projects = ref([])
-const token = localStorage.getItem('token')
+const projectsList = ref(projects.value)
 const props = defineProps(['user', 'project'])
-const router = useRouter()
-// console.log('project props', props.project)
+const emit = defineEmits(['projectId'])
+const projectDisplayInput = ref(null)
 
+
+const handelDetailsClick = (id) => {
+    // router.push({ name: 'Home', params: { projectId: projectsData[0]._id } })
+    emit('projectId', id)
+    // console.log(id)
+}
+
+//when new project added
 watchEffect(async () => {
     if (props.project) {
         const response = await fetch(`/api/project`)
@@ -46,26 +57,36 @@ watchEffect(async () => {
             console.log('No data')
         } else {
             projects.value = projectsData
-            console.log(projects.value)
         }
     }
 })
 
-//onBeforeMounted fetch projects 
-onBeforeMount(async () => {
-    if (!props.user) {
-        router.push({ name: 'Login' })
-        console.log('Re-loggin required after page refresh')
+//search
+watchEffect(() => {
+    if (projectDisplayInput.value !== '') {
+        projectsList.value = projects.value.filter((project) => {
+            return project.projectName.toLowerCase().includes(projectDisplayInput.value)
+        })
+        console.log(projectDisplayInput.value)
+
+        console.log(projectsList.value)
+
     }
 
-    // const queryEmail = `/api/project/?${props.user ? props.user.email : ''}`
+})
+
+//onBeforeMounted fetch projects 
+onBeforeMount(async () => {
     const response = await fetch('/api/project/')
     const projectsData = await response.json()
+    projects.value = projectsData
+
     if (projectsData.length < 0) {
         console.log('No data')
     } else {
-        projects.value = projectsData
-        console.log('vue', projects.value[0].projectDesc)
+        if (!props.user) {
+            console.log('Re-loggin required after page refresh')
+        }
     }
 })
 
@@ -99,12 +120,25 @@ ul {
     margin-left: 1rem;
 }
 
-.card {
-    /* border: 1px solid hsl(0, 1%, 78%); */
+.search {
+    margin-bottom: 1rem;
+}
+
+.search-heading {
+    margin-bottom: 0.5rem;
+}
+
+.search-input {
+    width: 100%;
+    border: none;
     box-shadow: 0px 2px 20px 1px rgb(0 0 0 / .1);
-    border-bottom: 1px solid rgb(132, 132, 132);
+    font-size: 1.25rem;
+    line-height: 1.5;
+}
+
+.card {
+    box-shadow: 0px 2px 20px 1px rgb(0 0 0 / .1);
     padding: 1rem;
-    /* background-color: rgba(224, 224, 224, 0.11); */
 }
 
 .projects-list {

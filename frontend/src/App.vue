@@ -13,14 +13,23 @@ const updateProjects = (projectData) => {
   project.value = projectData
 }
 
+const projectDetailId = ref(null)
+const updateProjectDetails = (id) => {
+  // console.log('from APP ', id)
+  projectDetailId.value = id
+  // console.log(projectDetailId.value)
+}
+
 </script>
 
 <template>
   <div class="container">
     <main>
       <NavMain :user="user" @user-data="updateUser" />
-      <router-view :user="user" @user-data="updateUser" @new-project="updateProjects"></router-view>
-      <MyProjects :user="user" :project="project" />
+      <router-view :user="user" @user-data="updateUser" @new-project="updateProjects"
+        :projectDetailId="projectDetailId">
+      </router-view>
+      <MyProjects :user="user" :project="project" @project-id="updateProjectDetails" />
     </main>
   </div>
 </template>
@@ -33,6 +42,6 @@ const updateProjects = (projectData) => {
 
 main {
   display: grid;
-  grid-template-columns: 3fr 1fr;
+  grid-template-columns: 3fr 2fr;
 }
 </style>
