@@ -3,7 +3,7 @@
         <div>
             <h2 class="project-details-heading">Project Details</h2>
         </div>
-        <table class="tg">
+        <table class="tg" v-if="projectDisplay">
             <tbody>
                 <tr>
                     <td class="tg-0lax" colspan="4">Name: {{projectDisplay.projectName}}</td>
@@ -38,7 +38,7 @@ const getProjectById = async (id) => {
 }
 
 watchEffect(() => {
-    console.log('from where it needs to be', props.projectDetailId)
+    // console.log('from where it needs to be', props.projectDetailId)
     if (props.projectDetailId !== null) {
         getProjectById(props.projectDetailId)
     }

@@ -45,7 +45,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, watchEffect } from 'vue';
 import { useRouter } from 'vue-router';
 
 const router = useRouter()
@@ -64,7 +64,6 @@ const props = defineProps(['user'])
 const emit = defineEmits(['new-project'])
 
 const handelSubmit = async () => {
-
     const data = {
         projectName: title.value,
         date: date.value,

@@ -108,4 +108,15 @@ projectSchema.statics.addProject = async function (projectData) {
   }
 }
 
+projectSchema.statics.deleteProject = async function (id) {
+  const deletedProject = await this.deleteById({ _id: id })
+  if (!project) {
+    console.log('No projects')
+    return
+  } else {
+    // console.log(project)
+    return deletedProject
+  }
+}
+
 export default model('Projects', projectSchema)
