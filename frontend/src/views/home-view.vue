@@ -22,12 +22,11 @@
             </tbody>
         </table>
     </div>
-
-
 </template>
 
 <script setup>
 import { onBeforeMount, ref, watchEffect } from 'vue';
+
 const props = defineProps(['projectDetailId'])
 const projects = ref([])
 const projectDisplay = ref()
@@ -38,9 +37,10 @@ const getProjectById = async (id) => {
 }
 
 watchEffect(() => {
-    // console.log('from where it needs to be', props.projectDetailId)
     if (props.projectDetailId !== null) {
         getProjectById(props.projectDetailId)
+    } else {
+        projectDisplay.value = projects.value[0]
     }
 })
 
@@ -48,14 +48,10 @@ onBeforeMount(async () => {
     const response = await fetch(`/api/project/`)
     projects.value = await response.json()
 
-
     if (projects.length < 0) {
         console.log('No data')
-    } else {
-        projectDisplay.value = projects.value[0]
     }
 })
-
 
 </script>
 

@@ -11,7 +11,7 @@ export const getProject = async (req, res) => {
 }
 
 export const addProject = async (req, res) => {
-  const newProject = await Projects.addProject(req.body)
+  const newProject = await Projects.addProject(req.body, req)
   res.status(200).json(newProject)
 }
 

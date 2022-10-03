@@ -15,11 +15,14 @@
                         <li>{{ `${project.projectName} @ ${project.location}` }}</li>
                         <div>
                             <div class="btn-container" v-show="!props.user && projects[0] !== 'No projects'">
-                                <button class="btn btn-details"
-                                    @click="handelDetailsClick(project._id)">Details</button>
+                                <button class="btn btn-details" @click="handelId(project._id)">Details</button>
                             </div>
                             <div class="btn-container" v-show="props.user && projects[0] !== 'No projects'">
-                                <button class="btn btn-edit" @click="handelEditClick">Edit</button>
+                                <button class="btn btn-details"
+                                    @click="handelLoggedInDetails(project._id)">Details</button>
+                            </div>
+                            <div class="btn-container" v-show="props.user && projects[0] !== 'No projects'">
+                                <button class="btn btn-edit" @click="handelEdit(project._id)">Edit</button>
                             </div>
                             <div class="btn-container btn-delete" v-show="props.user && projects[0] !== 'No projects'">
                                 <button class="btn " @click="handelDeleteClick(project._id)">Delete</button>
@@ -39,15 +42,21 @@ import { useRouter } from 'vue-router';
 const router = useRouter()
 
 const projects = ref([])
-const projectsList = ref(projects.value)
+const projectsList = ref()
 const props = defineProps(['user', 'project'])
-const emit = defineEmits(['projectId'])
+const emit = defineEmits(['projectId', 'projectEdit', 'projectDetails'])
 const projectDisplayInput = ref(null)
 const isDeleted = ref(null)
 
-
-const handelDetailsClick = (id) => {
+const handelId = (id) => {
     emit('projectId', id)
+}
+
+const handelLoggedInDetails = (id) => {
+    emit('projectDetails', id)
+}
+const handelEdit = (id) => {
+    router.push({ name: 'EditProject', params: { user: props.user, id } })
 }
 
 const handelDeleteClick = async (id) => {
@@ -61,7 +70,6 @@ const handelDeleteClick = async (id) => {
         },
     })
     isDeleted.value = await response.json()
-    // console.log('after delete', isDeleted.value.acknowledged)
 
     projects.value = projects.value.filter((product) => {
         return product._id !== id
@@ -87,12 +95,12 @@ watchEffect(async () => {
 //search
 watchEffect(() => {
     if (projectDisplayInput.value !== null) {
-        console.log(projectsList.value)
+        // console.log(projectsList.value)
         projectsList.value = projects.value.filter((project) => {
-            return project.projectName.toLowerCase().includes(projectDisplayInput.value)
+            return project.projectName.toLowerCase()
+                .includes(projectDisplayInput.value)
         })
     }
-
 })
 
 //onBeforeMounted fetch projects 
@@ -107,11 +115,9 @@ onBeforeMount(async () => {
         if (!props.user) {
             console.log('Re-loggin required after page refresh')
             router.push({ name: 'Home' })
-
         }
     }
 })
-
 </script>
 
 <style scoped>
@@ -123,7 +129,6 @@ ul {
     list-style: none;
     margin-bottom: .5rem;
 }
-
 
 .btn-container {
     display: inline-block;

@@ -1,7 +1,10 @@
 <script setup>
-import { ref } from 'vue';
+import { ref } from 'vue'
+import { useRouter } from 'vue-router'
 import NavMain from './components/header-main.vue'
 import MyProjects from './views/my-projects.vue'
+
+const router = useRouter()
 
 const user = ref(null)
 const updateUser = (userData) => {
@@ -14,12 +17,19 @@ const updateProjects = (projectData) => {
 }
 
 const projectDetailId = ref(null)
-const updateProjectDetails = (id) => {
-  // console.log('from APP ', id)
+const updateProjectId = (id) => {
   projectDetailId.value = id
-  // console.log(projectDetailId.value)
 }
 
+const detailsProject = (id) => {
+  router.push({ name: 'Home' })
+  projectDetailId.value = id
+}
+
+const projectEditId = ref(null)
+const editProject = (id) => {
+  projectEditId.value = id
+}
 </script>
 
 <template>
@@ -29,7 +39,8 @@ const updateProjectDetails = (id) => {
       <router-view :user="user" @user-data="updateUser" @new-project="updateProjects"
         :projectDetailId="projectDetailId">
       </router-view>
-      <MyProjects :user="user" :project="project" @project-id="updateProjectDetails" />
+      <MyProjects :user="user" :project="project" @project-id="updateProjectId" @projectDetails="detailsProject"
+        @project-edit="editProject" />
     </main>
   </div>
 </template>

@@ -3,6 +3,7 @@ import SignUp from '../views/sign-up.vue'
 import Login from '../views/log-in.vue'
 import Projects from '../views/my-projects.vue'
 import addProject from '../views/add-project.vue'
+import editProject from '../views/edit-project.vue'
 
 const routes = [
   {
@@ -31,6 +32,17 @@ const routes = [
     path: '/add-project',
     name: 'AddProject',
     component: addProject,
+    beforeEnter: (to, from) => {
+      if (!to.params.user) {
+        return false
+      }
+    },
+  },
+  {
+    path: '/edit-project',
+    name: 'EditProject',
+    component: editProject,
+    props: true,
     beforeEnter: (to, from) => {
       if (!to.params.user) {
         return false

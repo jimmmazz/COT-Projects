@@ -1,9 +1,8 @@
 <template>
     <nav class="nav">
         <div class="logged-in" v-if="isUser">
-            <h2>Add</h2>
+            <h2>COT Irrigation Projects</h2>
             <p>Welcome: {{ user.name }}</p>
-            <!-- <router-link to="/add-project">Add Project</router-link> -->
             <button @click="handelLogout">Logout</button>
         </div>
         <div class="login" v-else>
@@ -28,8 +27,6 @@ if (props.user !== null) {
     isUser.value = true
 }
 
-
-
 const handelLogout = () => {
     localStorage.removeItem('token')
     isUser.value = false
@@ -38,12 +35,6 @@ const handelLogout = () => {
 }
 
 watchEffect(() => {
-    // if (props.user) {
-    //     isUser.value = 'dog'
-    //     console.log(isUser)
-    // }
-    // console.log(props.user)
-
     if (props.user !== null) {
         if (props.user.hasOwnProperty('email')) {
             isUser.value = true
@@ -52,7 +43,6 @@ watchEffect(() => {
         // handelLogout()
     }
 })
-
 </script>
 
 <style scoped>
@@ -62,7 +52,6 @@ watchEffect(() => {
     grid-row: 1/2;
     box-shadow: 0px 2px 20px 1px rgb(0 0 0 / .1);
     border-bottom: 1px solid rgb(132, 132, 132);
-    /* background-color: salmon; */
 }
 
 a {

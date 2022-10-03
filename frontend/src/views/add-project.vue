@@ -98,9 +98,6 @@ const handelSubmit = async () => {
     } else {
         error.value = json
     }
-
-    // console.log(json)
-    // router.push('/projects')
 }
 
 </script>

@@ -53,7 +53,7 @@ projectSchema.statics.getProject = async function (id) {
   }
 }
 
-projectSchema.statics.addProject = async function (projectData) {
+projectSchema.statics.addProject = async function (projectData, req) {
   const {
     projectName,
     date,
@@ -100,7 +100,19 @@ projectSchema.statics.addProject = async function (projectData) {
     projectData.location = validator.escape(projectData.location)
     projectData.contactName = validator.escape(projectData.contactName)
 
-    const newProject = await this.create({ ...projectData })
+    console.log(req.query)
+
+    let newProject
+    if (req.method === 'POST') {
+      newProject = await this.create({ ...projectData })
+    }
+    if (req.method === 'PUT') {
+      newProject = await this.findOneAndUpdate(
+        { _id: req.query.id },
+        { ...projectData }
+      )
+    }
+
     return newProject
   } catch (error) {
     // console.log(error)
